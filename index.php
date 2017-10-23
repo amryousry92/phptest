@@ -21,4 +21,9 @@ foreach( $product["variants"] as $variant ) {
 $mysqli->query('INSERT INTO mtcproducts (product_id, product_name, product_variant_id, product_variant_position,product_variant_color) VALUES '.implode(',', $sql));
 
 $mysqli->close();
+
+
+//  SELECT * FROM mtcproducts WHERE product_variant_id = ‘54321’;
+
+// This will return the record with variant id = 54321
 ?>
