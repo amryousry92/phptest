@@ -1,5 +1,6 @@
 <html>
 <head>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
      <title>PHP Challenge</title>
 </head>
 <body>
@@ -13,7 +14,51 @@
     </body>
 </html>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script>
+
+var data = [];
+var pointer = [];
+
+function add_options(){
+  var option = '';
+  for (var i=0;i< data.length;i++){
+     option += '<option value="'+ data[i]["product_variant_id"] + '">' + data[i]["product_variant_color"] + '</option>';
+  }
+  $('#colors').append(option);
+}
+
+$('#colors').on('change', function() {
+
+  row = data.filter(function(row){
+    return row["product_variant_id"]==$('#colors').val();
+  })[0];
+
+  $('#product_name').html(row["product_name"]);
+  $('#product_id').html(row["product_id"]);
+
+});
+
+// load all data
+function init(){
+  $.ajax({
+      type: "GET",
+      url: "load_data.php",
+      dataType :"json",
+      success:function(msg){
+        data = msg["data"];
+        add_options();
+      },
+      error:function(msg)
+      {
+        alert("error ",msg);
+      }
+    });
+}
+
+
+$(document).ready( function () {
+  init();
+
+} );
 
 </script>
